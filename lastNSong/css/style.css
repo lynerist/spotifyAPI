@@ -1,0 +1,16 @@
+.input-number {
+    width: 50px; /* Imposta la larghezza dell'input */
+    padding: 5px; /* Padding interno */
+    border: 2px solid #007BFF; /* Bordo blu */
+    border-radius: 5px; /* Angoli arrotondati */
+    font-size: 16px; /* Dimensione del font */
+    color: #333; /* Colore del testo */
+    text-align: center; /* Centra il testo nell'input */
+    margin: 0 5px; /* Spazio tra l'input e il testo */
+}
+
+.input-number:focus {
+    border-color: #0056b3; /* Bordo blu scuro quando in focus */
+    outline: none; /* Rimuove il contorno predefinito */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Ombra quando in focus */
+}

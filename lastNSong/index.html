@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+    <link rel="stylesheet" href="css/style.css">
     <head>
         <meta charset="utf-8">
-        <title>My Spotify Profile</title>
+        <title>Last N Song</title>
         <script src="functions.js"></script>
         <script src="script.js" type="module"></script>
     </head>
     <body>
-        <h1>Display your Spotify profile data</h1>
+        <h1>Display last <input type="number" class="input-number" min="0" value="10" id="songsNumber"> songs </h1>
 
         <section id="profile">
-        <h2>Logged in as <span id="displayName"></span></h2>
-        <span id="avatar"></span>
-        <ul>
-            <li>User ID: <span id="id"></span></li>
-            <li>Email: <span id="email"></span></li>
-            <li>Spotify URI: <a id="uri" href="#"></a></li>
-            <li>Link: <a id="url" href="#"></a></li>
-            <li>Profile Image: <span id="imgUrl"></span></li>
-        </ul>
+        <h2>Songs:</h2>
+        
+        
         </section>
     </body>
 </html>
