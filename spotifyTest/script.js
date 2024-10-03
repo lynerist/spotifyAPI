@@ -1,9 +1,13 @@
+let clientId
 fetch("accessToken").then((res) => res.text()).then((text) => {
-    console.log(text)
-}).catch((e) => console.error(e));
+    clientId = text
+}).catch((e) => console.error(e))
+await sleep(1000)
 
-const clientId = "your-client-id-here"; // Replace with your client ID
-const code = undefined;
+console.log(clientId)
+
+const params = new URLSearchParams(window.location.search);
+const code = params.get("code");
 
 if (!code) {
     redirectToAuthCodeFlow(clientId);
@@ -11,20 +15,4 @@ if (!code) {
     const accessToken = await getAccessToken(clientId, code);
     const profile = await fetchProfile(accessToken);
     populateUI(profile);
-}
-
-async function redirectToAuthCodeFlow(clientId) {
-    // TODO: Redirect to Spotify authorization page
-}
-
-async function getAccessToken(clientId, code) {
-  // TODO: Get access token for code
-}
-
-async function fetchProfile(token) {
-    // TODO: Call Web API
-}
-
-function populateUI(profile) {
-    // TODO: Update UI with profile data
 }
