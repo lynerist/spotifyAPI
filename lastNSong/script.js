@@ -11,10 +11,16 @@ async function fetchRecentlyPlayed(token, numberSongs) {
     return await result.json();
 }
 
-let numberSongs = document.getElementById("songsNumber").value
-let songs = await fetchRecentlyPlayed(accessToken, numberSongs)
-songs = songs.items
-
-for (let i = 0; i<numberSongs; i++){
-    console.log(songs[i].track.name)
+async function logNSongs(){
+    clearConsole()
+    let numberSongs = document.getElementById("songsNumber").value
+    let songs = await fetchRecentlyPlayed(accessToken, numberSongs)
+    songs = songs.items
+    
+    for (let i = 0; i<numberSongs; i++){
+        console.log(songs[i].track.name + " - " + songs[i].track.artists[0].name)
+    }
 }
+
+document.getElementById("songsNumber").addEventListener("change", logNSongs)
+logNSongs()

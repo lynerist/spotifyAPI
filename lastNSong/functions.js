@@ -2,24 +2,30 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function getClientId(){
-    await fetch("accessToken").then((res) => res.text()).then((text) => {
+async function getTextFromFile(fileName){
+    await fetch(fileName).then((res) => res.text()).then((text) => {
         tmp = text
     }).catch((e) => console.error(e))
     return tmp
 }
 
+async function getClientId(){
+    clientId = await getTextFromFile("data/accessToken")
+    return clientId
+}
+
 async function redirectToAuthCodeFlow(clientId) {
     const verifier = generateCodeVerifier(128);
     const challenge = await generateCodeChallenge(verifier);
-
+    var scopes = (await getTextFromFile("data/scopes") + '').split("\n").join(" ")
+   
     localStorage.setItem("verifier", verifier);
 
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("response_type", "code");
     params.append("redirect_uri", "http://localhost:8000");
-    params.append("scope", "user-read-private user-read-email user-read-recently-played");
+    params.append("scope", scopes);
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
 
@@ -76,4 +82,14 @@ async function logIn(clientId){
     return accessToken
 }
 
-
+function clearConsole(){
+    console.API;
+    if (typeof console._commandLineAPI !== 'undefined') {
+        console.API = console._commandLineAPI; //chrome
+    } else if (typeof console._inspectorCommandLineAPI !== 'undefined') {
+        console.API = console._inspectorCommandLineAPI; //Safari
+    } else if (typeof console.clear !== 'undefined') {
+        console.API = console;
+    }
+    console.API.clear();
+}

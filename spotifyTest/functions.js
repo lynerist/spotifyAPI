@@ -3,7 +3,7 @@ function sleep(ms) {
 }
 
 async function getClientId(){
-    await fetch("accessToken").then((res) => res.text()).then((text) => {
+    await fetch("data/accessToken").then((res) => res.text()).then((text) => {
         tmp = text
     }).catch((e) => console.error(e))
     return tmp
