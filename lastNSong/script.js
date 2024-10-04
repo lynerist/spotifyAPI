@@ -4,7 +4,7 @@ const accessToken = await logIn(clientId);
 async function fetchRecentlyPlayed(token, numberSongs) {
     numberSongs = numberSongs>50?50:numberSongs
     numberSongs = numberSongs<1?1:numberSongs
-    const result = await fetch(`https://api.spotify.com/v1/me/player/recently-played`, {
+    const result = await fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=${numberSongs}`, {
         method: "GET", headers: { Authorization: `Bearer ${token}` }
     });
 
