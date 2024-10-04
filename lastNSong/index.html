@@ -4,16 +4,15 @@
     <head>
         <meta charset="utf-8">
         <title>Last N Song</title>
-        <script src="functions.js"></script>
-        <script src="script.js" type="module"></script>
+        <script src="js/functions.js"></script>
+        <script src="js/script.js" type="module"></script>
     </head>
     <body>
-        <h1>Display last <input type="number" class="input-number" min="0" value="10" id="songsNumber"> songs </h1>
+        <h1>Display last <input type="number" class="input-number" min="1" max="50" value="10" id="songsNumber"> songs </h1>
 
         <section id="profile">
-        <h2>Songs:</h2>
-        
-        
+            <h2>Songs:</h2>
+            <div id="songs"></div>
         </section>
     </body>
 </html>
