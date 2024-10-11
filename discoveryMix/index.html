@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <link rel="stylesheet" href="css/style.css">
+    <head>
+        <meta charset="utf-8">
+        <title>Discovery Mix</title>
+        <script src="js/functions.js"></script>
+        <script src="js/script.js" type="module"></script>
+    </head>
+    <body>
+        <h1>Search up to five ideas for the playlist.</h1>
+
+        <section id="inputs">
+            <h2>Selected:</h2>
+            <div id="songs"></div>
+
+            <div class="search-container">
+                Artist: <input type="text" class="search-input" placeholder="Search ->" id="artist-input">
+                <select id="artist-results" class="result-dropdown" size="5"></select>
+            </div>
+            <div class="search-container">
+                Track: <input type="text" class="search-input" placeholder="Search ->" id="song-input">
+                <select id="song-results" class="result-dropdown" size="5"></select>
+            </div>
+            <div class="search-container">
+                Genre: <input type="text" class="search-input" placeholder="Search ->" id="genre-input">
+                <select id="genre-results" class="result-dropdown" size="5"></select>
+            </div>
+        </section>
+    </body>
+</html>

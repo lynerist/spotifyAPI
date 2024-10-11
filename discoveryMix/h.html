@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Always-Visible Dropdown Song Search</title>
+    <style>
+        /* Style for the container */
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        /* Style for the input field */
+        .search-input {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        /* Style for the dropdown */
+        .result-dropdown {
+            width: 300px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-container">
+        <!-- Input field for song name -->
+        <input type="text" class="search-input" placeholder="Enter song name" id="song-input">
+        <!-- Dropdown for song results -->
+        <select id="song-results" class="result-dropdown" size="5"></select>
+    </div>
+
+    <script>
+        // Example song data (this would normally come from an API)
+        const allSongs = [
+            "Song 1 - Artist A",
+            "Song 2 - Artist B",
+            "Song 3 - Artist C",
+            "Song 4 - Artist D",
+            "Another Song - Artist X",
+            "Best Song - Artist Y",
+            "New Song - Artist Z"
+        ];
+
+        const inputField = document.getElementById('song-input');
+        const dropdown = document.getElementById('song-results');
+
+        // Function to filter and update the dropdown based on input
+        function updateDropdown() {
+            const query = inputField.value.toLowerCase();
+            
+            // Clear previous results
+            dropdown.innerHTML = '';
+
+            // Filter songs based on the query
+            const filteredSongs = allSongs.filter(song => 
+                song.toLowerCase().includes(query)
+            );
+
+            if (filteredSongs.length > 0) {
+                // Populate dropdown with filtered results
+                filteredSongs.forEach((song, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = song;
+                    dropdown.appendChild(option);
+                });
+            } else {
+                // Show "No results found" if there are no matches
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'No results found';
+                dropdown.appendChild(option);
+            }
+        }
+
+        // Listen for input changes
+        inputField.addEventListener('input', updateDropdown);
+
+        // Handle selection from dropdown
+        dropdown.addEventListener('change', function () {
+            const selectedSong = this.options[this.selectedIndex].text;
+            if (selectedSong !== 'No results found') {
+                alert('You selected: ' + selectedSong);
+                // Further logic can be added here to handle the selected song
+            }
+        });
+
+        // Initial population of the dropdown (shows "No results found" by default)
+        updateDropdown();
+    </script>
+
+</body>
+</html>
