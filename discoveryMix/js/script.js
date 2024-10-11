@@ -139,3 +139,66 @@ dropdownArtist.addEventListener('change', function () {
         // Further logic can be added here to handle the selected Artist
     }
 });
+
+// GENRE
+
+const inputFieldGenre = document.getElementById('genre-input');
+const dropdownGenre = document.getElementById('genre-results');
+
+const genres = await fetch(`https://api.spotify.com/v1/recommendations/available-genre-seeds`, {
+    method: "GET", headers: { Authorization: `Bearer ${accessToken}` }
+}).then((result) => result.json().then((res) => res.genres))
+
+function updateSearchedGenre() {
+    if (Date.now() - lastChangeTime <= waitTimeBeforeSearch){
+        setTimeout(updateSearchedGenre, waitTimeBeforeSearch)
+        return
+    }
+    lastChangeTime = Date.now()
+
+    const query = inputFieldGenre.value.toLowerCase();
+    if (query == lastQuery){
+        return
+    }
+    lastQuery = query
+
+    // Clear previous results
+    dropdownGenre.innerHTML = '';
+
+    // Filter songs based on the query
+    const filteredGenres = genres.filter(genre => 
+        genre.toLowerCase().includes(query)
+    );
+    console.log(filteredGenres)
+    
+    if (filteredGenres.length > 0) {
+        // Populate dropdown with filtered results
+        filteredGenres.forEach((genre, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = genre;
+            dropdownGenre.appendChild(option);
+        });
+
+        dropdownGenre.style.display = 'block';
+    } else {
+        // Show "No results found" if there are no matches
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No results found';
+        dropdownGenre.appendChild(option);
+        dropdownGenre.style.display = 'none';
+    }
+}
+
+// Listen for input changes
+inputFieldGenre.addEventListener('input', updateSearchedGenre);
+
+// Handle selection from dropdown
+dropdownGenre.addEventListener('change', function () {
+    const selectedGenre = this.options[this.selectedIndex].text;
+    if (selectedGenre !== 'No results found') {
+        alert('You selected: ' + selectedGenre);
+        // Further logic can be added here to handle the selected Genre
+    }
+});
