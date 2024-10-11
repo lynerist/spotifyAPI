@@ -28,3 +28,15 @@
     outline: none;
     display: none; /* Initially hidden */
 }
+
+.image-placeholder {
+    width: 200px; /* Set width of the placeholder */
+    height: 200px; /* Set height of the placeholder */
+    background-color: #f0f0f0; /* Placeholder background color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 16px;
+    border: 1px solid #ccc; /* Optional border */
+}
