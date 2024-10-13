@@ -12,22 +12,28 @@
 
         <section id="inputs">
             <h2>Selected:</h2>
-            <div id="songs"></div>
 
-            <div class="image-placeholder">
-                <img src="https://via.placeholder.com/300x200" alt="Image Placeholder" id="image-placeholder">
+            <div id="upper-part">
+                <div class="image-placeholder">
+                    <img src="data/placeholder.jpg" alt="Image Placeholder" id="image-placeholder">
+                </div>
+                <div id="selected"></div>
+                
             </div>
-            <div class="search-container">
-                Artist: <input type="text" class="search-input" placeholder="Search ->" id="artist-input">
-                <select id="artist-results" class="result-dropdown" size="5"></select>
-            </div>
-            <div class="search-container">
-                Track: <input type="text" class="search-input" placeholder="Search ->" id="song-input">
-                <select id="song-results" class="result-dropdown" size="5"></select>
-            </div>
-            <div class="search-container">
-                Genre: <input type="text" class="search-input" placeholder="Search ->" id="genre-input">
-                <select id="genre-results" class="result-dropdown" size="5"></select>
+
+            <div class="search-containers">
+                <div class="search-container">
+                    Artist: <input type="text" class="search-input" placeholder="Search ->" id="artist-input">
+                    <select id="artist-results" class="result-dropdown" size="5"></select>
+                </div>
+                <div class="search-container">
+                    Track: <input type="text" class="search-input" placeholder="Search ->" id="song-input">
+                    <select id="song-results" class="result-dropdown" size="5"></select>
+                </div>
+                <div class="search-container">
+                    Genre: <input type="text" class="search-input" placeholder="Search ->" id="genre-input">
+                    <select id="genre-results" class="result-dropdown" size="5"></select>
+                </div>
             </div>
         </section>
     </body>

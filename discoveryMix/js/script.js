@@ -50,7 +50,6 @@ async function updateSearchedArtist() {
             
         option.onmouseover = (func  => updateImage(result.artists.items[i].images[1].url))
         dropdownArtist.appendChild(option);
-        console.log(option.onmouseover)
     }  
     dropdownArtist.style.display = 'block';
 }
@@ -96,31 +95,17 @@ async function updateSearchedTrack() {
     dropdownTrack.innerHTML = '';
 
     let result = await fetchSearchedTrack(query)
-    console.log(result)
+    console.log(result.tracks)
 
-    let results = []
-    
     for (let i=0; i<result.tracks.limit; i++){
-        results.push(result.tracks.items[i].name)
-    }
-    console.log(results)
-
-
-    if (results.length > 0 && query) {
-        // Populate dropdown with filtered results
-        results.forEach((song, index) => {
-            const option = document.createElement('option');
-            option.value = index;
-            option.textContent = song;
-            dropdownTrack.appendChild(option);
-        });
-
-        // Show the dropdown if there are results
-        dropdownTrack.style.display = 'block';
-    } else {
-        // Hide the dropdown if there are no results
-        dropdownTrack.style.display = 'none';
-    }
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent += result.tracks.items[i].name;
+            
+        option.onmouseover = (func  => updateImage(result.tracks.items[i].album.images[1].url))
+        dropdownTrack.appendChild(option);
+    }  
+    dropdownTrack.style.display = 'block';
 }
 
 // Listen for input changes
@@ -197,3 +182,4 @@ dropdownGenre.addEventListener('change', function () {
         // Further logic can be added here to handle the selected Genre
     }
 });
+
