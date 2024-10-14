@@ -1,4 +1,4 @@
-.upper-part{
+#upper-part{
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -49,10 +49,43 @@
     height: 200px;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
-#image-placeholder{
-    width: 100%;
+
+.icon{
+    width: 99%;
     object-fit:scale-down;
     max-width:100%;
     max-height:100%;
+}
+
+#seed-preview{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.x{
+    position:absolute;
+    top:5px;
+    right:5px;
+}
+
+button {
+    background-color: red; /* Colore di sfondo rosso */
+    color: white; /* Testo bianco */
+    border: none; /* Nessun bordo */
+    border-radius: 50%; /* Forma circolare */
+    width: 20px; /* Larghezza fissa */
+    height: 20px; /* Altezza fissa */
+    cursor: pointer; /* Cambia il cursore quando passa sopra */
+}
+
+button:hover {
+    background-color: darkred; /* Colore più scuro al passaggio del mouse */
+}
+
+p{
+    max-width: 99%;
 }

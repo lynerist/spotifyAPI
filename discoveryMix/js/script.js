@@ -10,6 +10,7 @@ var seed = {"artists":[],"tracks":[],"genres":[]}
 
 const inputFieldArtist = document.getElementById('artist-input');
 const dropdownArtist = document.getElementById('artist-results');
+const seedPreview = document.getElementById('seed-preview')
 let artists = []
 
 async function fetchSearchedArtist(query) {
@@ -67,8 +68,8 @@ function addArtist(index){
         return
     }
     seed["artists"].push(artists[index])
-    console.log(seed)
     updateSearchedArtist(false)
+    updateSeedPreview()
 }
 
 // Listen for input changes
@@ -135,8 +136,8 @@ function addTrack(index){
         return
     }
     seed["tracks"].push(tracks[index])
-    console.log(seed)
     updateSearchedTrack(false)
+    updateSeedPreview()
 }
 
 // Listen for input changes
@@ -221,6 +222,99 @@ function addGenre(index){
         return
     }
     seed["genres"].push(filteredGenres[index])
-    console.log(seed)
     updateSearchedGenre(false)
+    updateSeedPreview()
+}
+
+function updateSeedPreview(){
+    console.log(seed)
+    seedPreview.innerHTML = ""
+    
+    for (let i=0; i<seed.artists.length; i++){
+        const element = document.createElement('div')
+        const imgContainer = document.createElement('div')
+        imgContainer.classList.add("image-placeholder")
+
+        const img = document.createElement('img')
+        img.src = seed.artists[i].images.length>0?seed.artists[i].images[1].url:""
+        img.classList.add("icon")
+        imgContainer.appendChild(img)
+        element.appendChild(imgContainer)
+        
+        let artistName = document.createElement('p')
+        artistName.innerHTML = seed.artists[i].name
+        element.appendChild(artistName)
+
+        // Bottone "X" per rimuovere l'artista
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'X';
+        removeButton.classList.add("x")
+        removeButton.style.position = 'absolute'
+        removeButton.onclick = () => {
+            seed["artists"].splice(i, 1)
+            updateSeedPreview()
+        }
+        imgContainer.appendChild(removeButton);
+
+        seedPreview.appendChild(element)
+    }
+
+    for (let i=0; i<seed.tracks.length; i++){
+        const element = document.createElement('div')
+        const imgContainer = document.createElement('div')
+        imgContainer.classList.add("image-placeholder")
+
+        const img = document.createElement('img')
+        img.src = seed.tracks[i].album.images[1].url
+        img.classList.add("icon")
+        imgContainer.appendChild(img)
+        element.appendChild(imgContainer)
+        
+        let trackName = document.createElement('p')
+        trackName.innerHTML = seed.tracks[i].name
+        element.appendChild(trackName)
+
+        // Bottone "X" per rimuovere l'artista
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'X';
+        removeButton.classList.add("x")
+        removeButton.style.position = 'absolute'
+        removeButton.onclick = () => {
+            seed["tracks"].splice(i, 1)
+            updateSeedPreview()
+        }
+        imgContainer.appendChild(removeButton);
+        
+        seedPreview.appendChild(element)
+    }
+
+    for (let i=0; i<seed.genres.length; i++){
+        const element = document.createElement('div')
+        const imgContainer = document.createElement('div')
+        imgContainer.classList.add("image-placeholder")
+
+        const img = document.createElement('img')
+        //img.src = seed.genres[i].album.images[1].url
+        img.classList.add("icon")
+        imgContainer.appendChild(img)
+        element.appendChild(imgContainer)
+        
+        let genreName = document.createElement('p')
+        genreName.innerHTML = seed.genres[i]
+        element.appendChild(genreName)
+
+        // Bottone "X" per rimuovere l'artista
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'X';
+        removeButton.classList.add("x")
+        removeButton.style.position = 'absolute'
+        removeButton.onclick = () => {
+            seed["genres"].splice(i, 1)
+            updateSeedPreview()
+        }
+        imgContainer.appendChild(removeButton);
+        
+        seedPreview.appendChild(element)
+    }
+
 }
