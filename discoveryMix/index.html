@@ -21,20 +21,29 @@
                 
             </div>
 
-            <div class="search-containers">
+            <div class="search-containers" id="lower-part">
                 <div class="search-container">
-                    Artist: <input type="text" class="search-input" placeholder="Search ->" id="artist-input">
+                    Artist of the same genre: <input type="text" class="search-input" placeholder="Search ->" id="artist-input">
                     <select id="artist-results" class="result-dropdown" size="5"></select>
                 </div>
-                <div class="search-container">
-                    Track: <input type="text" class="search-input" placeholder="Search ->" id="song-input">
-                    <select id="song-results" class="result-dropdown" size="5"></select>
+                <div class="search-containers">
+                    <div class="search-container">
+                        Look for: <input type="text" class="search-input" placeholder="Search ->" id="user-input">
+                    </div>
                 </div>
-                <div class="search-container">
-                    Genre: <input type="text" class="search-input" placeholder="Search ->" id="genre-input">
-                    <select id="genre-results" class="result-dropdown" size="5"></select>
+                <div>
+                    <button class="search" id="searchButton">Search</button>
+                </div>
+
+                <div>
+                    <button class="search" id="saveButton">Save</button>
                 </div>
             </div>
         </section>
+
+        <div id="preview">
+
+        </div>
+
     </body>
 </html>

@@ -72,7 +72,7 @@
     right:5px;
 }
 
-button {
+.x {
     background-color: red; /* Colore di sfondo rosso */
     color: white; /* Testo bianco */
     border: none; /* Nessun bordo */
@@ -82,10 +82,32 @@ button {
     cursor: pointer; /* Cambia il cursore quando passa sopra */
 }
 
-button:hover {
+.x:hover {
     background-color: darkred; /* Colore più scuro al passaggio del mouse */
 }
 
 p{
     max-width: 99%;
+}
+
+#upper-part {
+    min-height: 250px;
+}
+
+#lower-part {
+    min-height: 220px;
+}
+
+.search{
+    height: 30px;
+    width: 100px;
+    color: chartreuse;
+    background-color: darkgreen;
+    margin-right: 100px;
+    margin-top: 10px;
+}
+
+.search:hover{
+    background-color: rgb(41, 255, 41);
+    color: black;
 }

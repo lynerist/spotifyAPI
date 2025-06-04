@@ -1,1 +1,5 @@
 user-read-recently-played
+playlist-modify-private
+playlist-modify-public
+playlist-read-private
+playlist-read-collaborative

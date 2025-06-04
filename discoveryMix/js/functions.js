@@ -1,3 +1,5 @@
+const localhost = 8000
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -24,7 +26,7 @@ async function redirectToAuthCodeFlow(clientId) {
     const params = new URLSearchParams();
     params.append("client_id", clientId);
     params.append("response_type", "code");
-    params.append("redirect_uri", "http://localhost:8000");
+    params.append("redirect_uri", "http://localhost:"+localhost);
     params.append("scope", scopes);
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
@@ -58,7 +60,7 @@ async function getAccessToken(clientId, code) {
     params.append("client_id", clientId);
     params.append("grant_type", "authorization_code");
     params.append("code", code);
-    params.append("redirect_uri", "http://localhost:8000");
+    params.append("redirect_uri", "http://localhost:"+localhost);
     params.append("code_verifier", verifier);
 
     const result = await fetch("https://accounts.spotify.com/api/token", {
@@ -92,4 +94,38 @@ function clearConsole(){
         console.API = console;
     }
     console.API.clear();
+}
+
+async function getUserId(accessToken) {
+    const res = await fetch("https://api.spotify.com/v1/me", {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    const data = await res.json();
+    return data.id;
+}
+
+async function createPlaylist(playlistName, userId, accessToken, description) {
+    
+    const url = `https://api.spotify.com/v1/users/${userId}/playlists`;
+    const body = {
+        name: playlistName,
+        description: description,
+        public: false
+    };
+
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+        throw new Error(`Errore nella creazione della playlist: ${response.status}`);
+    }
+    let tmp = await response.json()
+
+    return tmp.id();
 }
