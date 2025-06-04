@@ -127,5 +127,5 @@ async function createPlaylist(playlistName, userId, accessToken, description) {
     }
     let tmp = await response.json()
 
-    return tmp.id();
+    return tmp.id;
 }

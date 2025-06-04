@@ -13,6 +13,7 @@ const inputFieldArtist = document.getElementById('artist-input');
 const dropdownArtist = document.getElementById('artist-results');
 const seedPreview = document.getElementById('seed-preview')
 let artists = []
+var genresSet = new Set([])
 
 async function fetchSearchedArtist(query) {
     const result = await fetch(`https://api.spotify.com/v1/search?q=${encodeURI(query)}&type=artist`, {
@@ -72,7 +73,8 @@ function addArtist(index){
     console.log(artists[index].genres)
     updateSearchedArtist(false)
     updateSeedPreview()
-
+    addGenres(artists[index])
+    updateGenres()
 }
 
 // Listen for input changes
@@ -96,9 +98,13 @@ async function fetchSearchedTrack(query) {
 }
 
 async function fetchNextTracks(url) {
-    const result = await fetch(url, {
-        method: "GET", headers: { Authorization: `Bearer ${accessToken}` }
-    });
+    do{
+        await sleep(1000)
+        var result = await fetch(url, {
+            method: "GET", headers: { Authorization: `Bearer ${accessToken}` }
+        });
+    } while (!result.ok)
+
     return await result.json()
 }
 
@@ -124,15 +130,51 @@ function updateSeedPreview(){
         const removeButton = document.createElement('button');
         removeButton.textContent = 'X';
         removeButton.classList.add("x")
+        removeButton.classList.add("ximage")
         removeButton.style.position = 'absolute'
         removeButton.onclick = () => {
+            removeGenres(seed["artists"][i])
             seed["artists"].splice(i, 1)
             updateSeedPreview()
+            updateGenres()
         }
         imgContainer.appendChild(removeButton);
 
         seedPreview.appendChild(element)
     }
+}
+
+function addGenres(artist){
+    artist.genres.forEach(genresSet.add, genresSet)
+}
+
+function removeGenres(artist){
+    artist.genres.forEach(genresSet.delete, genresSet) 
+}
+
+function updateGenres(){
+    const genresDiv = document.getElementById("selectedGenres")
+    genresDiv.innerHTML = ""
+
+    genresSet.forEach(genre => {
+        const genreBox = document.createElement('div')
+        genreBox.classList.add("genreBox")
+        const genreText = document.createElement('div')
+        genreText.innerHTML = genre
+        genreBox.append(genreText)
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'X';
+        removeButton.classList.add("x")
+        removeButton.addEventListener("click",function(){
+            genresSet.delete(genre)
+            updateGenres()
+        })
+        genreBox.append(removeButton)
+
+        genresDiv.append(genreBox)
+    })
+
 }
 
 async function isGenreConsistent(genres, artistID){
@@ -185,14 +227,11 @@ async function addTracksToPlaylist(playlistId, trackUris, accessToken) {
 
 var query = ""
 var tracks = []
+
 async function playlist(){
     query = seed.userInput
     tracks= []
 
-    let genresSet = new Set([])
-    seed.artists.forEach(artist=>
-        artist.genres.forEach(genresSet.add, genresSet)
-    )
     let genres = Array.from(genresSet)
     console.log(genres)
 
@@ -211,17 +250,23 @@ async function playlist(){
     var output = ""
 
     let nextTracks = result.tracks.next
-    for (var i=0; i<3; i++){
+
+    let rounds = 10
+    document.getElementById("countdown").innerText = rounds
+
+    for (var i=0; i<rounds; i++){
+        console.log("session " + i)
         var next = await fetchNextTracks(nextTracks)
+        
         next.tracks.items.forEach(async item => {
+            await sleep(25)
             if (await isGenreConsistent(genres, item.artists[0].id)){
                 tracks.push(item)
                 output += item.name + " - " + item.artists[0].name + "\n"
             }
         })
-
         nextTracks = next.tracks.next
-        await sleep(100)
+        document.getElementById("countdown").innerText = rounds - i - 1
     }
 
     var preview = document.getElementById("preview")
@@ -233,7 +278,7 @@ async function savePlaylist(){
     
     let playlistId = await findPlaylist(query)
     if (playlistId == ""){
-        playlistId = createPlaylist(query, userId, accessToken, `Playlist creata con ${query}`)
+        playlistId = await createPlaylist(query, userId, accessToken, `Playlist creata con ${query}`)
     }
     
     let urisToAdd = []
